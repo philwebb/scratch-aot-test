@@ -1,0 +1,50 @@
+== AOT Testing Sample Project
+
+Build https://github.com/philwebb/spring-boot/tree/gh-32191 using `./gradlew build publishToMavenLocal -x test -x intTest -x checkstyleNohttp`.
+
+Run the test using `mvn -Pnative clean test native:test`
+
+Currently erroring with:
+
+```
+Failures (1):
+  JUnit Jupiter:AottestdemoApplicationTests
+    ClassSource [className = 'com.example.aottestdemo.AottestdemoApplicationTests', filePosition = null]
+    => java.lang.ExceptionInInitializerError
+       org.springframework.test.context.TestContextManager.<init>(TestContextManager.java:122)
+       org.junit.jupiter.engine.execution.ExtensionValuesStore.lambda$getOrComputeIfAbsent$4(ExtensionValuesStore.java:86)
+       org.junit.jupiter.engine.execution.ExtensionValuesStore$MemoizingSupplier.computeValue(ExtensionValuesStore.java:223)
+       org.junit.jupiter.engine.execution.ExtensionValuesStore$MemoizingSupplier.get(ExtensionValuesStore.java:211)
+       org.junit.jupiter.engine.execution.ExtensionValuesStore$StoredValue.evaluate(ExtensionValuesStore.java:191)
+       [...]
+       Suppressed: java.lang.NoClassDefFoundError: Could not initialize class org.springframework.test.context.BootstrapUtils
+         org.springframework.test.context.TestContextManager.<init>(TestContextManager.java:122)
+         org.junit.jupiter.engine.execution.ExtensionValuesStore.lambda$getOrComputeIfAbsent$4(ExtensionValuesStore.java:86)
+         org.junit.jupiter.engine.execution.ExtensionValuesStore$MemoizingSupplier.computeValue(ExtensionValuesStore.java:223)
+         org.junit.jupiter.engine.execution.ExtensionValuesStore$MemoizingSupplier.get(ExtensionValuesStore.java:211)
+         org.junit.jupiter.engine.execution.ExtensionValuesStore$StoredValue.evaluate(ExtensionValuesStore.java:191)
+         [...]
+     Caused by: java.lang.IllegalStateException: Failed to load class for @org.springframework.test.context.web.WebAppConfiguration
+       org.springframework.test.context.BootstrapUtils.loadWebAppConfigurationClass(BootstrapUtils.java:226)
+       org.springframework.test.context.BootstrapUtils.<clinit>(BootstrapUtils.java:64)
+       [...]
+     Caused by: java.lang.ClassNotFoundException: org.springframework.test.context.web.WebAppConfiguration
+       java.lang.Class.forName(DynamicHub.java:1136)
+       org.springframework.util.ClassUtils.forName(ClassUtils.java:284)
+       org.springframework.test.context.BootstrapUtils.loadWebAppConfigurationClass(BootstrapUtils.java:222)
+       [...]
+
+Test run finished after 80 ms
+[         2 containers found      ]
+[         0 containers skipped    ]
+[         2 containers started    ]
+[         0 containers aborted    ]
+[         1 containers successful ]
+[         1 containers failed     ]
+[         1 tests found           ]
+[         0 tests skipped         ]
+[         0 tests started         ]
+[         0 tests aborted         ]
+[         0 tests successful      ]
+[         0 tests failed          ]
+```
