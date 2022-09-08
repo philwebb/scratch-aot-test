@@ -12,10 +12,10 @@ public class BootTests {
 
 	@Autowired
 	private ApplicationContext context;
-	
+
 	@Test
 	void contextLoads() {
-		assertThat(context).isNotNull();
+		assertThat(this.context).isNotNull();
 	}
-	
+
 }
